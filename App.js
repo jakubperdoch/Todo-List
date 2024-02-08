@@ -1,16 +1,34 @@
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
 import { useState } from 'react';
-import { StyleSheet, View, Text, SafeAreaView, FlatList } from 'react-native';
+import {
+ StyleSheet,
+ View,
+ Text,
+ SafeAreaView,
+ FlatList,
+ Button,
+} from 'react-native';
 
 export default function App() {
  const [courseGoals, setCourseGoals] = useState([]);
+ const [modalIsVisible, setModalIsVisible] = useState(false);
 
  function addGoalHandler(enteredGoalText) {
   setCourseGoals((currentCourseGoals) => [
    ...currentCourseGoals,
-   { text: enteredGoalText, key: Math.random().toString() },
+   { text: enteredGoalText, id: Math.random().toString() },
   ]);
+ }
+
+ function deleteGaolModal() {
+  setModalIsVisible(true);
+ }
+
+ function deleteGoalHandler(id) {
+  setCourseGoals((currentCourseGoals) => {
+   return currentCourseGoals.filter((goal) => goal.id !== id);
+  });
  }
 
  const scrollEnabled = courseGoals.length >= 11;
@@ -23,7 +41,13 @@ export default function App() {
     <FlatList
      data={courseGoals}
      renderItem={(itemData) => {
-      return <GoalItem text={itemData.item.text} />;
+      return (
+       <GoalItem
+        text={itemData.item.text}
+        onDeleteItem={deleteGoalHandler}
+        id={itemData.item.id}
+       />
+      );
      }}
      scrollEnabled={scrollEnabled}
      style={styles.goalContainer}

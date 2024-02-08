@@ -1,18 +1,40 @@
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Pressable, Image, View } from 'react-native';
 
 function GoalItem(props) {
- return <Text style={styles.goalItem}>{props.text}</Text>;
+ return (
+  <View style={styles.goalItem}>
+   <Pressable
+    onPress={props.onDeleteItem.bind(this, props.id)}
+    style={({ pressed }) => pressed && styles.pressedItem}
+   >
+    <Image style={styles.deleteIcon} source={require('../assets/close.png')} />
+   </Pressable>
+   <Text style={styles.goalItemText}>{props.text}</Text>
+  </View>
+ );
 }
 
 const styles = StyleSheet.create({
  goalItem: {
-  fontSize: 16,
-  backgroundColor: 'rgba(53, 56, 62, 0.05)',
   borderRadius: 5,
-  paddingVertical: 15,
+  height: 40,
+  backgroundColor: 'rgba(53, 56, 62, 0.05)',
   paddingHorizontal: 15,
   marginVertical: 5,
-  overflow: 'hidden',
+  alignItems: 'center',
+  justifyContent: 'start',
+  gap: '25',
+  flexDirection: 'row',
+ },
+ goalItemText: {
+  fontSize: 16,
+ },
+ pressedItem: {
+  opacity: 0.7,
+ },
+ deleteIcon: {
+  height: 12,
+  width: 12,
  },
 });
 export default GoalItem;
