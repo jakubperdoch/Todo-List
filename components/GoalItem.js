@@ -1,16 +1,28 @@
-import { Text, StyleSheet, Pressable, Image, View } from 'react-native';
+import { Text, StyleSheet, Pressable, Image, Animated } from 'react-native';
+import { createModal } from './DeleteAlert';
+import { useRef, useEffect } from 'react';
 
 function GoalItem(props) {
+ const fadeAnim = useRef(new Animated.Value(0)).current;
+
+ useEffect(() => {
+  Animated.timing(fadeAnim, {
+   toValue: 1,
+   duration: 300,
+   useNativeDriver: true,
+  }).start();
+ }, [fadeAnim]);
+
  return (
-  <View style={styles.goalItem}>
+  <Animated.View style={{ ...styles.goalItem, opacity: fadeAnim }}>
    <Pressable
-    onPress={props.onDeleteItem.bind(this, props.id)}
+    onPress={createModal.bind(this, props.id, props.onDeleteItem)}
     style={({ pressed }) => pressed && styles.pressedItem}
    >
     <Image style={styles.deleteIcon} source={require('../assets/close.png')} />
    </Pressable>
    <Text style={styles.goalItemText}>{props.text}</Text>
-  </View>
+  </Animated.View>
  );
 }
 

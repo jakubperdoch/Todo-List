@@ -9,8 +9,10 @@ function GoalInput(props) {
  }
 
  function addGoalHandler() {
-  props.onAddGoal(enteredGoalText);
-  setEnteredGoalText('');
+  if (enteredGoalText.trim() !== '' && enteredGoalText != null) {
+   props.onAddGoal(enteredGoalText);
+   setEnteredGoalText('');
+  }
  }
 
  return (
