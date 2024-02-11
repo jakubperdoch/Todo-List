@@ -1,9 +1,34 @@
 import { Text, StyleSheet, Pressable, Image, Animated } from 'react-native';
+import Checkbox from 'expo-checkbox';
+import { Audio } from 'expo-av';
 import { createModal } from './DeleteAlert';
-import { useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 function GoalItem(props) {
  const fadeAnim = useRef(new Animated.Value(0)).current;
+ const [isChecked, setChecked] = useState(false);
+ const [sound, setSound] = useState();
+ const [hasPlayedSound, setHasPlayedSound] = useState(false);
+
+ async function finishSound() {
+  console.log('Loading Sound');
+
+  const { sound } = await Audio.Sound.createAsync(
+   require('../assets/sounds/taskSound.mp3')
+  );
+
+  setSound(sound);
+
+  await sound.playAsync();
+ }
+ useEffect(() => {
+  return sound
+   ? () => {
+      console.log('Unloading Sound');
+      sound.unloadAsync();
+     }
+   : undefined;
+ }, [sound]);
 
  useEffect(() => {
   Animated.timing(fadeAnim, {
@@ -12,6 +37,14 @@ function GoalItem(props) {
    useNativeDriver: true,
   }).start();
  }, [fadeAnim]);
+
+ useEffect(() => {
+  if (isChecked && !hasPlayedSound) {
+   finishSound();
+   setHasPlayedSound(true);
+   props.onDeleteItem(props.id);
+  }
+ }, [isChecked, hasPlayedSound]);
 
  return (
   <Animated.View style={{ ...styles.goalItem, opacity: fadeAnim }}>
@@ -22,6 +55,12 @@ function GoalItem(props) {
     <Image style={styles.deleteIcon} source={require('../assets/close.png')} />
    </Pressable>
    <Text style={styles.goalItemText}>{props.text}</Text>
+   <Checkbox
+    value={isChecked}
+    onValueChange={setChecked}
+    color={isChecked ? 'rgba(0, 205, 45, 1)' : undefined}
+    style={styles.checkedItem}
+   />
   </Animated.View>
  );
 }
@@ -47,6 +86,10 @@ const styles = StyleSheet.create({
  deleteIcon: {
   height: 12,
   width: 12,
+ },
+ checkedItem: {
+  marginStart: 'auto',
+  borderRadius: 5,
  },
 });
 export default GoalItem;
