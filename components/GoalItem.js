@@ -45,7 +45,7 @@ function GoalItem(props) {
    setHasPlayedSound(true);
    setTimeout(() => {
     props.onDeleteItem(props.id);
-   }, 400);
+   }, 630);
   }
  }, [isChecked, hasPlayedSound]);
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
  goalItem: {
   borderRadius: 5,
   height: 40,
-  backgroundColor: 'rgba(53, 56, 62, 0.07)',
+  backgroundColor: 'rgba(221, 184, 146, .2)',
   paddingHorizontal: 15,
   marginVertical: 5,
   alignItems: 'center',
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
  checkedItem: {
   marginStart: 'auto',
   borderRadius: 5,
+  borderColor: '#7f5539',
  },
 });
 export default GoalItem;

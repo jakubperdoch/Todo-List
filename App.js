@@ -9,21 +9,17 @@ import {
  FlatList,
  Image,
 } from 'react-native';
-import { getData, storeData } from './components/store/store';
-import { fonts } from './components/fonts/Fonts';
-import * as Fonts from 'expo-font';
+import { StatusBar } from 'expo-status-bar';
+import { getData, storeData } from './components/store/Store';
+import { useFonts } from 'expo-font';
 
 export default function App() {
  const [courseGoals, setCourseGoals] = useState([]);
 
- useEffect(() => {
-  async function loadFonts() {
-   await Fonts.loadAsync(fonts);
-   setFontLoaded(true);
-  }
-
-  loadFonts();
- }, []);
+ useFonts({
+  'poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
+  'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
+ });
 
  useEffect(() => {
   const fetchData = async () => {
@@ -62,6 +58,7 @@ export default function App() {
 
  return (
   <SafeAreaView style={{ flex: 1, backgroundColor: '#fff1e6' }}>
+   <StatusBar style="dark"></StatusBar>
    <View style={styles.appContainer}>
     <View style={styles.titleContainer}>
      <Text style={styles.appTitle}>ToDo List</Text>
