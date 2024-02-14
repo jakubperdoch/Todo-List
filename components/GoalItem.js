@@ -1,5 +1,6 @@
 import { Text, StyleSheet, Pressable, Image, Animated } from 'react-native';
 import Checkbox from 'expo-checkbox';
+import * as Font from 'expo-font';
 import { Audio } from 'expo-av';
 import { createModal } from './DeleteAlert';
 import { useRef, useState, useEffect } from 'react';
@@ -42,7 +43,9 @@ function GoalItem(props) {
   if (isChecked && !hasPlayedSound) {
    finishSound();
    setHasPlayedSound(true);
-   props.onDeleteItem(props.id);
+   setTimeout(() => {
+    props.onDeleteItem(props.id);
+   }, 400);
   }
  }, [isChecked, hasPlayedSound]);
 
@@ -52,7 +55,10 @@ function GoalItem(props) {
     onPress={createModal.bind(this, props.id, props.onDeleteItem)}
     style={({ pressed }) => pressed && styles.pressedItem}
    >
-    <Image style={styles.deleteIcon} source={require('../assets/close.png')} />
+    <Image
+     style={styles.deleteIcon}
+     source={require('../assets/images/close.png')}
+    />
    </Pressable>
    <Text style={styles.goalItemText}>{props.text}</Text>
    <Checkbox
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
  goalItem: {
   borderRadius: 5,
   height: 40,
-  backgroundColor: 'rgba(53, 56, 62, 0.05)',
+  backgroundColor: 'rgba(53, 56, 62, 0.07)',
   paddingHorizontal: 15,
   marginVertical: 5,
   alignItems: 'center',
@@ -79,13 +85,15 @@ const styles = StyleSheet.create({
  },
  goalItemText: {
   fontSize: 16,
+  fontFamily: 'poppins-regular',
+  color: '#7f5539',
  },
  pressedItem: {
   opacity: 0.7,
  },
  deleteIcon: {
-  height: 12,
-  width: 12,
+  height: 13,
+  width: 13,
  },
  checkedItem: {
   marginStart: 'auto',

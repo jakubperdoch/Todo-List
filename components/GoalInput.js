@@ -19,11 +19,12 @@ function GoalInput(props) {
   <View style={styles.inputContainer}>
    <TextInput
     style={styles.textInput}
-    placeholder="Your Task"
+    placeholder="Your Task...."
     onChangeText={goalInputHandler}
     value={enteredGoalText}
+    placeholderTextColor={'#7f5539'}
    />
-   <Button title="Add Task" onPress={addGoalHandler} />
+   <Button title="Add Task" onPress={addGoalHandler} color={'#7f5539'} />
   </View>
  );
 }
@@ -34,7 +35,13 @@ const styles = StyleSheet.create({
   justifyContent: 'space-between',
   alignItems: 'center',
  },
- textInput: { width: '70%', fontSize: 19 },
+ textInput: {
+  width: '70%',
+  fontSize: 19,
+  fontFamily: 'poppins-regular',
+  color: '#7f5539',
+  borderBottomColor: '#7f5539',
+ },
 });
 
 export default GoalInput;
