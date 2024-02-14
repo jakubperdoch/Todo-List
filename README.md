@@ -56,7 +56,8 @@ This project is licensed under the [MIT License](LICENSE.md), allowing you to fr
 
 ## Example Screenshot
 
-![image](https://github.com/jakubperdoch/Todo-List/assets/65115839/dd7167fa-1c43-4ab6-902a-a386bd02979e)
+![image](https://github.com/jakubperdoch/Todo-List/assets/65115839/1dffe79e-dd08-46f3-8256-d14ae0292737)
+
 
 
 ## Acknowledgments
